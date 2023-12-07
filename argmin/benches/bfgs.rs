@@ -12,8 +12,7 @@ use argmin::solver::linesearch::MoreThuenteLineSearch;
 use argmin::solver::quasinewton::BFGS;
 use argmin_testfunctions::rosenbrock;
 use finitediff::FiniteDiff;
-use nalgebra::uninit::InitStatus;
-use ndarray::{array, Array1, Array2, FixedInitializer};
+use ndarray::{Array1, Array2};
 
 struct RosenbrockVec {
     a: f64,
@@ -39,7 +38,7 @@ impl Gradient for RosenbrockVec {
     type Gradient = Vec<f64>;
 
     fn gradient(&self, p: &Self::Param) -> Result<Self::Gradient, Error> {
-        Ok((*p).forward_diff(&|x| rosenbrock(&x, self.a, self.b)))
+        Ok((*p).forward_diff(&|x| rosenbrock(x, self.a, self.b)))
     }
 }
 
@@ -91,7 +90,7 @@ fn run_vec(
     let solver = BFGS::new(linesearch);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| {
             state
                 .param(init_param)
@@ -120,7 +119,7 @@ fn run_ndarray(
     let solver = BFGS::new(linesearch);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| {
             state
                 .param(init_param)
@@ -134,7 +133,7 @@ fn run_ndarray(
 fn criterion_benchmark(c: &mut Criterion) {
     let a = 1.0;
     let b = 100.0;
-    let init_param = vec![-1.2, 1.0, -10.0, 2.0, 3.0, 2.0];
+    let init_param = [-1.2, 1.0, -10.0, 2.0, 3.0, 2.0];
     let c1 = 1e-4;
     let c2 = 0.9;
     let iterations: u64 = 60;

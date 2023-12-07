@@ -12,7 +12,7 @@ use argmin::solver::quasinewton::LBFGS;
 use argmin_testfunctions::{rosenbrock, rosenbrock_2d, rosenbrock_2d_derivative};
 use finitediff::FiniteDiff;
 use nalgebra::DVector;
-use ndarray::{array, Array1};
+use ndarray::Array1;
 
 struct RosenbrockVec {
     a: f64,
@@ -108,7 +108,7 @@ impl Gradient for RosenbrockVec {
     type Gradient = Vec<f64>;
 
     fn gradient(&self, p: &Self::Param) -> Result<Self::Gradient, Error> {
-        Ok((*p).forward_diff(&|x| rosenbrock(&x, self.a, self.b)))
+        Ok((*p).forward_diff(&|x| rosenbrock(x, self.a, self.b)))
     }
 }
 
@@ -151,7 +151,7 @@ fn run_2d_vec(
     let solver = LBFGS::new(linesearch, m);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
         .run()?;
     Ok(())
@@ -176,7 +176,7 @@ fn run_2d_ngalgebra(
     let solver = LBFGS::new(linesearch, m);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
         .run()?;
     Ok(())
@@ -203,7 +203,7 @@ fn run_2d_ndarray(
     let solver = LBFGS::new(linesearch, m);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
         .run()?;
     Ok(())

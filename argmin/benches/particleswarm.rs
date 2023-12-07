@@ -50,7 +50,7 @@ fn run_vec(bound: f64, num_particles: usize, iterations: u64) -> Result<(), Erro
 
     let solver = ParticleSwarm::new((vec![-bound, -bound], vec![bound, bound]), num_particles);
 
-    let res = Executor::new(cost_function, solver)
+    let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
         .run()?;
     Ok(())
@@ -64,7 +64,7 @@ fn run_ngalgebra(bound: f64, num_particles: usize, iterations: u64) -> Result<()
         num_particles,
     );
 
-    let res = Executor::new(cost_function, solver)
+    let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
         .run()?;
     Ok(())
@@ -78,7 +78,7 @@ fn run_ndarray(bound: f64, num_particles: usize, iterations: u64) -> Result<(), 
         num_particles,
     );
 
-    let res = Executor::new(cost_function, solver)
+    let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
         .run()?;
     Ok(())

@@ -6,13 +6,12 @@
 // copied, modified, or distributed except according to those terms.
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 
-use argmin::core::{CostFunction, Error, Executor, Gradient};
+use argmin::core::{CostFunction, Error, Executor, Gradient, State};
 use argmin::solver::linesearch::MoreThuenteLineSearch;
 use argmin::solver::quasinewton::LBFGS;
-use argmin_testfunctions::{rosenbrock, rosenbrock_2d, rosenbrock_2d_derivative};
+use argmin_testfunctions::rosenbrock;
 use finitediff::FiniteDiff;
-use nalgebra::DVector;
-use ndarray::{array, Array1};
+use ndarray::Array1;
 
 struct RosenbrockVec {
     a: f64,
@@ -38,7 +37,7 @@ impl Gradient for RosenbrockVec {
     type Gradient = Vec<f64>;
 
     fn gradient(&self, p: &Self::Param) -> Result<Self::Gradient, Error> {
-        Ok((*p).forward_diff(&|x| rosenbrock(&x, self.a, self.b)))
+        Ok((*p).forward_diff(&|x| rosenbrock(x, self.a, self.b)))
     }
 }
 
@@ -77,10 +76,12 @@ fn run_vec(
     // set up a line search
     let linesearch = MoreThuenteLineSearch::new().with_c(c1, c2)?;
     // Set up solver
-    let solver = LBFGS::new(linesearch, m);
+    let solver = LBFGS::new(linesearch, m)
+        .with_tolerance_grad(0.0)?
+        .with_tolerance_cost(0.0)?;
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
         .run()?;
     Ok(())
@@ -110,13 +111,14 @@ fn run_ndarray(
     let res = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
         .run()?;
+    println!("{}", res.state().get_iter());
     Ok(())
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
     let a = 1.0;
     let b = 100.0;
-    let init_param = vec![-1.2, 1.0, -10.0, 2.0, 3.0, 2.0, 4.0, 10.0];
+    let init_param = [-1.2, 1.0, -10.0, 2.0, 3.0, 2.0, 4.0, 10.0];
     let c1 = 1e-4;
     let c2 = 0.9;
     let m = 7;
@@ -157,3 +159,4 @@ fn criterion_benchmark(c: &mut Criterion) {
 
 criterion_group!(benches, criterion_benchmark);
 criterion_main!(benches);
+//%%

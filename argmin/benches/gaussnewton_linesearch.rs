@@ -6,7 +6,6 @@
 // copied, modified, or distributed except according to those terms.
 use criterion::{criterion_group, criterion_main, Criterion};
 
-use argmin::core::observers::{ObserverMode, SlogLogger};
 use argmin::core::{Error, Executor, Jacobian, Operator};
 use argmin::solver::gaussnewton::GaussNewtonLS;
 use argmin::solver::linesearch::MoreThuenteLineSearch;
@@ -74,7 +73,7 @@ fn run() -> Result<(), Error> {
     let solver = GaussNewtonLS::new(linesearch);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(10))
         // .add_observer(SlogLogger::term(), ObserverMode::Always)
         .run()?;

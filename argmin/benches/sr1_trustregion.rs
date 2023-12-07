@@ -65,7 +65,7 @@ fn run() -> Result<(), Error> {
     let solver = SR1TrustRegion::new(subproblem);
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| {
             state
                 .param(init_param)

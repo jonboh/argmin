@@ -51,7 +51,7 @@ fn run() -> Result<(), Error> {
     let solver: Newton<f64> = Newton::new();
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(8))
         .run()?;
     Ok(())

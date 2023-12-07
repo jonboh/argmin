@@ -41,7 +41,7 @@ fn run() -> Result<(), Error> {
     .with_sd_tolerance(0.0001)?;
 
     // Run solver
-    let res = Executor::new(cost, solver)
+    let _ = Executor::new(cost, solver)
         .configure(|state| state.max_iters(100))
         // .add_observer(SlogLogger::term(), ObserverMode::Always)
         .run()?;
