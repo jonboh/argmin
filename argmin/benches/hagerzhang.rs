@@ -59,6 +59,7 @@ fn run() -> Result<(), Error> {
                 .cost(init_cost)
                 .max_iters(100)
         })
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

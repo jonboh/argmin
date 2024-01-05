@@ -31,6 +31,7 @@ fn run() -> Result<(), Error> {
 
     let _res = Executor::new(operator, solver)
         .configure(|state| state.param(init_param).max_iters(iters))
+        .ctrlc(false)
         // .add_observer(SlogLogger::term(), ObserverMode::Always)
         .run()?;
     Ok(())

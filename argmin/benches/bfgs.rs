@@ -97,6 +97,7 @@ fn run_vec(
                 .inv_hessian(init_hessian)
                 .max_iters(iterations)
         })
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -126,6 +127,7 @@ fn run_ndarray(
                 .inv_hessian(init_hessian)
                 .max_iters(iterations)
         })
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

@@ -59,6 +59,7 @@ fn run() -> Result<(), Error> {
                 .inv_hessian(init_hessian)
                 .max_iters(1000)
         })
+        .ctrlc(false)
         // .add_observer(SlogLogger::term(), ObserverMode::Always)
         .run()?;
     Ok(())

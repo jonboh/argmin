@@ -53,6 +53,7 @@ fn run() -> Result<(), Error> {
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(8))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

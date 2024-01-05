@@ -129,6 +129,7 @@ fn run() -> Result<(), Error> {
                 // Optional: Set target cost function value (defaults to `std::f64::NEG_INFINITY`)
                 .target_cost(0.0)
         })
+        .ctrlc(false)
         // Optional: Attach a observer
         // .add_observer(SlogLogger::term(), ObserverMode::Always)
         .run()?;

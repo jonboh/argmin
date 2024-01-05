@@ -52,6 +52,7 @@ fn run_vec(bound: f64, num_particles: usize, iterations: u64) -> Result<(), Erro
 
     let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -66,6 +67,7 @@ fn run_ngalgebra(bound: f64, num_particles: usize, iterations: u64) -> Result<()
 
     let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -80,6 +82,7 @@ fn run_ndarray(bound: f64, num_particles: usize, iterations: u64) -> Result<(), 
 
     let _ = Executor::new(cost_function, solver)
         .configure(|state| state.max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

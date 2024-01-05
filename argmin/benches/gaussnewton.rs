@@ -105,6 +105,7 @@ fn run_ngalgebra(
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -123,6 +124,7 @@ fn run_ndarray(data: &[(f64, f64)], init_param: (f64, f64), iterations: u64) -> 
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

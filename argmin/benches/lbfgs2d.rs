@@ -153,6 +153,7 @@ fn run_2d_vec(
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -178,6 +179,7 @@ fn run_2d_ngalgebra(
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }
@@ -205,6 +207,7 @@ fn run_2d_ndarray(
     // Run solver
     let _ = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     Ok(())
 }

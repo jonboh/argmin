@@ -110,6 +110,7 @@ fn run_ndarray(
     // Run solver
     let res = Executor::new(cost, solver)
         .configure(|state| state.param(init_param).max_iters(iterations))
+        .ctrlc(false)
         .run()?;
     println!("{}", res.state().get_iter());
     Ok(())
